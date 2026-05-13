@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4 shadow" style="background-color: #1f2a36; color: white; border-radius: 15px;">
+
+            <h2 class="text-center mb-4">Perfil</h2>
+
+            <p><strong>Email:</strong> {{ user.usuario }}</p>
+            <p><strong>Fecha de nacimiento:</strong> {{ user.fecha_nacimiento }}</p>
+            <p><strong>Género:</strong> {{ user.genero }}</p>
+
+            <a href="/editar_perfil" class="btn btn-primary mt-3">Editar perfil</a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
