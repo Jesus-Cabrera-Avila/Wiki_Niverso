@@ -8,6 +8,7 @@ from flask import (
 )
 
 from flask_mail import Mail, Message
+
 from itsdangerous import (
     URLSafeTimedSerializer,
     SignatureExpired,
@@ -22,8 +23,12 @@ app = Flask(__name__)
 
 app.secret_key = "clave_secreta_super_segura"
 
+app.config["SERVER_NAME"] = "sevenfold-dormitory-emptier.ngrok-free.dev"
+
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+
 app.config['MAIL_PORT'] = 587
+
 app.config['MAIL_USE_TLS'] = True
 
 app.config['MAIL_USERNAME'] = 'jchuy.avigoku.8z@gmail.com'
@@ -94,6 +99,11 @@ def cambiar_password():
                 token=token,
                 _external=True
             )
+
+            # VER LINK EN TERMINAL
+            print("\nLINK GENERADO:")
+            print(link)
+            print()
 
             msg = Message(
                 "Cambiar contraseña",
@@ -173,7 +183,9 @@ def registrar():
     password = request.form["password"]
 
     dia = request.form["dia"]
+
     mes = request.form["mes"]
+
     anio = request.form["anio"]
 
     genero = request.form.get("genero")
@@ -242,4 +254,9 @@ def logout():
     return redirect("/login")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
