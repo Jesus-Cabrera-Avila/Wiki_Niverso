@@ -1,5 +1,21 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import (
+    Flask,
+    request,
+    url_for,
+    redirect,
+    render_template,
+    session
+)
+
 from flask_mail import Mail, Message
+from itsdangerous import (
+    URLSafeTimedSerializer,
+    SignatureExpired,
+    BadSignature
+)
+
+import bcrypt
+
 from pymongo import MongoClient
 
 app = Flask(__name__)
@@ -18,6 +34,8 @@ app.config['MAIL_DEFAULT_SENDER'] = 'jchuy.avigoku.8z@gmail.com'
 
 mail = Mail(app)
 
+serializer = URLSafeTimedSerializer(app.secret_key)
+
 uri = "mongodb+srv://24308060610607_db_user:J260909c@dmc5.af41dor.mongodb.net/?retryWrites=true&w=majority"
 
 client = MongoClient(uri)
@@ -28,8 +46,7 @@ usuarios = db["usuarios"]
 
 @app.route("/")
 def index():
-    return render_template("index.html")
-
+    return redirect("/login")
 
 @app.route("/perfil")
 def perfil():
@@ -37,61 +54,116 @@ def perfil():
     if "usuario" not in session:
         return redirect("/login")
 
-    user = usuarios.find_one({"usuario": session["usuario"]})
+    user = usuarios.find_one({
+        "usuario": session["usuario"]
+    })
 
-    return render_template("perfil.html", user=user)
-
+    return render_template(
+        "perfil.html",
+        user=user
+    )
 
 @app.route("/login")
 def login():
     return render_template("inicio_sesion.html")
 
-
 @app.route("/cuenta")
 def cuenta():
     return render_template("crear_cuenta.html")
 
-@app.route("/recuperar", methods=["GET", "POST"])
-def recuperar():
+@app.route("/cambiar_password", methods=["GET", "POST"])
+def cambiar_password():
 
     if request.method == "POST":
 
         correo = request.form["correo"].strip().lower()
 
-        user = usuarios.find_one({"usuario": correo})
+        user = usuarios.find_one({
+            "usuario": correo
+        })
 
         if user:
 
+            token = serializer.dumps(
+                correo,
+                salt="cambiar-password"
+            )
+
+            link = url_for(
+                "reset_password",
+                token=token,
+                _external=True
+            )
+
             msg = Message(
-                "Recuperar contraseña",
+                "Cambiar contraseña",
                 recipients=[correo]
             )
 
             msg.body = f"""
 Hola.
 
-Solicitaste recuperar tu contraseña.
+Haz clic en el siguiente enlace para cambiar tu contraseña:
 
-Tu contraseña es:
+{link}
 
-{user['password']}
+Este enlace expira en 15 minutos.
 """
 
             mail.send(msg)
 
             return render_template(
-                "recuperar_contraseña.html",
+                "cambiar_password.html",
                 mensaje="Correo enviado correctamente"
             )
 
         else:
 
             return render_template(
-                "recuperar_contraseña.html",
+                "cambiar_password.html",
                 error="Ese correo no está registrado"
             )
 
-    return render_template("recuperar_contraseña.html")
+    return render_template("cambiar_password.html")
+
+@app.route("/reset/<token>", methods=["GET", "POST"])
+def reset_password(token):
+
+    try:
+
+        correo = serializer.loads(
+            token,
+            salt="cambiar-password",
+            max_age=900
+        )
+
+    except SignatureExpired:
+        return "El enlace expiró"
+
+    except BadSignature:
+        return "Token inválido"
+
+    if request.method == "POST":
+
+        nueva_password = request.form["password"]
+
+        password_encriptada = bcrypt.hashpw(
+            nueva_password.encode("utf-8"),
+            bcrypt.gensalt()
+        )
+
+        usuarios.update_one(
+            {"usuario": correo},
+            {
+                "$set": {
+                    "password": password_encriptada
+                }
+            }
+        )
+
+        return redirect("/login")
+
+    return render_template("nueva_password.html")
 
 @app.route("/registrar", methods=["POST"])
 def registrar():
@@ -106,7 +178,9 @@ def registrar():
 
     genero = request.form.get("genero")
 
-    user_existente = usuarios.find_one({"usuario": usuario})
+    user_existente = usuarios.find_one({
+        "usuario": usuario
+    })
 
     if user_existente:
 
@@ -115,10 +189,19 @@ def registrar():
             error="Este correo ya está registrado"
         )
 
+    password_encriptada = bcrypt.hashpw(
+        password.encode("utf-8"),
+        bcrypt.gensalt()
+    )
+
     usuarios.insert_one({
+
         "usuario": usuario,
-        "password": password,
+
+        "password": password_encriptada,
+
         "fecha_nacimiento": f"{dia}/{mes}/{anio}",
+
         "genero": genero
     })
 
@@ -131,9 +214,14 @@ def iniciar():
 
     password = request.form["password"]
 
-    user = usuarios.find_one({"usuario": usuario})
+    user = usuarios.find_one({
+        "usuario": usuario
+    })
 
-    if user and user["password"] == password:
+    if user and bcrypt.checkpw(
+        password.encode("utf-8"),
+        user["password"]
+    ):
 
         session["usuario"] = usuario
 
