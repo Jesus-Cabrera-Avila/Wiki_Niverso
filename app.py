@@ -1,3 +1,4 @@
+from flask import Flask, render_template, request, redirect, session
 from flask import (
     Flask,
     request,
@@ -100,9 +101,10 @@ def cambiar_password():
                 _external=True
             )
 
-            # VER LINK EN TERMINAL
             print("\nLINK GENERADO:")
+
             print(link)
+
             print()
 
             msg = Message(
@@ -156,6 +158,15 @@ def reset_password(token):
     if request.method == "POST":
 
         nueva_password = request.form["password"]
+
+        confirmar_password = request.form["confirmar_password"]
+
+        if nueva_password != confirmar_password:
+
+            return render_template(
+                "nueva_password.html",
+                error="Las contraseñas no coinciden"
+            )
 
         password_encriptada = bcrypt.hashpw(
             nueva_password.encode("utf-8"),
