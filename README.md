@@ -11,7 +11,7 @@
 ## Propocito del proyecto:
 ### En este proyecto buscamos crear un sitio web personal para poder almacenar y consultar información de nuestros personajes creados, poder checar cuantos personajes vamos y poder incluir mas si es el caso teniendo en cuenta lo siguiente: Nombre, Edad, Apariencia, Trasfondo, Personalidad, Poderes, Herramientas, Lugar de origen y Época. 
 
-### Personajes predeterminados son:De los siguientes personajes: Evn0, Solyn, Yharim, Draedon, Devorador de dioses, Chuy, Yorii, Evno, E1502m (Eduardo) y Adrian.
+### Personajes predeterminados son: Evn0, Solyn, Yharim, Draedon, Devorador de dioses, Chuy, Yorii, Evno, E1502m (Eduardo) y Adrian.
 
 ## NGROK 
 ## es una herramienta que crea un túnel seguro entre Internet y tu computadora local. Sirve para exponer un servidor local (Flask, FastAPI, Node, etc.) a Internet sin configurar routers ni IP pública.
