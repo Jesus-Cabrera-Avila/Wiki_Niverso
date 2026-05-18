@@ -13,6 +13,10 @@
 
 ### Personajes predeterminados son:De los siguientes personajes: Evn0, Solyn, Yharim, Draedon, Devorador de dioses, Chuy, Yorii, Evno, E1502m (Eduardo) y Adrian.
 
-uv pip install flask flask-mail itsdangerous bcrypt pymongo dnspython
-ngrok descargar 
-ngrok http 5000
+## NGROK 
+## es una herramienta que crea un túnel seguro entre Internet y tu computadora local. Sirve para exponer un servidor local (Flask, FastAPI, Node, etc.) a Internet sin configurar routers ni IP pública.
+
+## Comandos de descarga:
+### uv add flask flask-mail itsdangerous bcrypt pymongo dnspython
+### ngrok http 5000
+### ngrok config add-authtoken TU_TOKEN
