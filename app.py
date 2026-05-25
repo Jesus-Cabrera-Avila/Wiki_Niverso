@@ -248,7 +248,7 @@ def iniciar():
 
         session["usuario"] = usuario
 
-        return redirect("/perfil")
+        return redirect(url_for("tarjetas"))
 
     else:
 
@@ -256,6 +256,14 @@ def iniciar():
             "inicio_sesion.html",
             error="Usuario o contraseña incorrectos"
         )
+
+@app.route("/Principal")
+def tarjetas():
+
+    if "usuario" not in session:
+        return redirect("/login")
+
+    return render_template("necxo.html")
 
 @app.route("/logout")
 def logout():
