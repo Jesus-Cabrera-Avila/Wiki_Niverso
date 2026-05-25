@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Libros{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="text-center mb-5" style="color:white;">
+        Libros
+    </h2>
+
+    <!-- BOTONES -->
+
+    <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap">
+
+        <a href="{{ url_for('comics_page') }}"
+        class="btn"
+        style="background:#1f2a36;color:white;border:1px solid #a680d8;">
+            Comics
+        </a>
+
+        <a href="{{ url_for('mangas_page') }}"
+        class="btn"
+        style="background:#1f2a36;color:white;border:1px solid #a680d8;">
+            Mangas
+        </a>
+
+        <a href="{{ url_for('libros_page') }}"
+        class="btn"
+        style="background:#a680d8;color:white;border:none;">
+            Libros
+        </a>
+
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- LIBRO -->
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+            style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename='img/it.jpg') }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        IT
+                    </h5>
+
+                    <p>
+                        Un grupo de amigos enfrenta una entidad aterradora en el pueblo de Derry.
+                    </p>
+
+                    <small>
+                        Autor: Stephen King
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

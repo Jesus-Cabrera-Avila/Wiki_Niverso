@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block title %}Comics{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="text-center mb-5" style="color:white;">
+        Comics
+    </h2>
+
+    <!-- BOTONES -->
+
+    <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap">
+
+        <a href="{{ url_for('comics_page') }}"
+        class="btn"
+        style="background:#a680d8;color:white;border:none;">
+            Comics
+        </a>
+
+        <a href="{{ url_for('mangas_page') }}"
+        class="btn"
+        style="background:#1f2a36;color:white;border:1px solid #a680d8;">
+            Mangas
+        </a>
+
+        <a href="{{ url_for('libros_page') }}"
+        class="btn"
+        style="background:#1f2a36;color:white;border:1px solid #a680d8;">
+            Libros
+        </a>
+
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- COMIC FIJO 1 -->
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+                style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename='img/absolute_batman.jpeg') }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        Absolute Batman
+                    </h5>
+
+                    <p>
+                        Una nueva y más caótica versión del caballero de la noche.
+                    </p>
+
+                    <small>
+                        Autor: DC Comics
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COMIC FIJO 2 -->
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+                style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename='img/spiderman.jpg') }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        Spider-Man No 94
+                    </h5>
+
+                    <p>
+                        Peter Parker lucha contra nuevas amenazas en Nueva York.
+                    </p>
+
+                    <small>
+                        Autor: Marvel
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COMIC FIJO 3 -->
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+                style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename='img/invincible.jpg') }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        Invincible
+                    </h5>
+
+                    <p>
+                        Un joven héroe descubre el verdadero poder de su legado.
+                    </p>
+
+                    <small>
+                        Autor: Robert Kirkman
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COMIC FIJO 4 -->
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+                style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename='img/spawn.jpg') }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        Spawn
+                    </h5>
+
+                    <p>
+                        Un guerrero resucitado del infierno lucha entre la oscuridad y su humanidad.
+                    </p>
+
+                    <small>
+                        Autor: Todd McFarlane
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COMIC FIJO 5 -->
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+                style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename='img/capitan_america.jpg') }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        Capitán América
+                    </h5>
+
+                    <p>
+                        Un supersoldado símbolo de justicia y valentía combate las amenazas del mundo.
+                    </p>
+
+                    <small>
+                        Autor: Marvel
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COMIC FIJO 6 -->
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+                style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename='img/superman.jpeg') }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        Superman
+                    </h5>
+
+                    <p>
+                        El último hijo de Krypton usa sus poderes para proteger a la humanidad.
+                    </p>
+
+                    <small>
+                        Autor: DC Comics
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COMICS DINÁMICOS -->
+
+        {% for comic in comics %}
+
+        <div class="col-md-4">
+
+            <div class="card h-100 shadow"
+                style="background:#1f2a36;border:none;border-radius:15px;color:white;overflow:hidden;">
+
+                <img
+                    src="{{ url_for('static', filename=comic.imagen) }}"
+                    style="height:220px;object-fit:cover;width:100%;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 style="color:#a680d8;">
+                        {{ comic.titulo }}
+                    </h5>
+
+                    <p>
+                        {{ comic.descripcion }}
+                    </p>
+
+                    <small>
+                        Autor: {{ comic.autor }}
+                    </small>
+
+                    <a
+                        href="{{ url_for('editar_comic', id=comic._id) }}"
+                        class="btn mt-3"
+                        style="background:#a680d8;color:white;border:none;"
+                    >
+                        Editar
+                    </a>
+
+                    <a
+                        href="{{ url_for('eliminar_comic', id=comic._id) }}"
+                        class="btn btn-danger mt-2"
+                    >
+                        Eliminar
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
