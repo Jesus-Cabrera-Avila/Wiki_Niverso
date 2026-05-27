@@ -8,6 +8,14 @@
 ### Jesus Cabrera Avila
 ### 24308060610607@cetis61.edu.mx
 
+![Texto alternativo](static/img/Evan.png)
+
+### Jesus Cabrera Avila
+### 24308060610607@cetis61.edu.mx
+
+![Texto alternativo](static/img/Jesus.png)
+
+
 ## Propocito del proyecto:
 ### En este proyecto buscamos crear un sitio web personal para poder ver informacion de comics que puedan ser de interes para el usuario, teniendo informacion de el nombre, fecha de publicasion, editorial, autor, artista, personajes y donde se puede comprar. y se da la opcion al usuario para poder incluir y modificar la informacion de nuevos comics. 
 
