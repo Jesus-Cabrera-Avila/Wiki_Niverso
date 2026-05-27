@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from itsdangerous import URLSafeTimedSerializer
+from flask_mail import Mail, Message
 import bcrypt
 from pymongo import MongoClient
 from bson import ObjectId
@@ -9,6 +10,14 @@ app = Flask(__name__)
 app.secret_key = "clave_secreta_super_segura"
 
 app.config["SERVER_NAME"] = "sevenfold-dormitory-emptier.ngrok-free.dev"
+
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "jchuy.avigoku.8z@gmail.com"
+app.config["MAIL_PASSWORD"] = "unyg pydi xjmo ysxx"
+
+mail = Mail(app)
 
 serializer = URLSafeTimedSerializer(app.secret_key)
 
@@ -53,7 +62,7 @@ def iniciar():
 
     return render_template(
         "inicio_sesion.html",
-        error="Usuario o contraseña incorrectos"
+        error="Usuario o contrasena incorrectos"
     )
 
 @app.route("/cuenta")
@@ -72,7 +81,7 @@ def registrar():
 
         return render_template(
             "crear_cuenta.html",
-            error="Ese correo ya está registrado"
+            error="Ese correo ya esta registrado"
         )
 
     password_hash = bcrypt.hashpw(
@@ -282,20 +291,115 @@ def cambiar_password():
                 error="Correo no encontrado"
             )
 
+        token = serializer.dumps(
+            correo,
+            salt="recuperar-password"
+        )
+
+        link = url_for(
+            "reset_password",
+            token=token,
+            _external=True
+        )
+
+        mensaje = Message(
+            subject="Recuperacion de contrasena",
+            sender=app.config["MAIL_USERNAME"],
+            recipients=[correo]
+        )
+
+        mensaje.body = f"""
+Hola.
+
+Da clic en el siguiente enlace para recuperar tu contrasena:
+
+{link}
+
+Si no solicitaste esto, ignora este mensaje.
+"""
+
+        mail.send(mensaje)
+
         return render_template(
             "cambiar_password.html",
-            mensaje="Usuario encontrado. Aquí normalmente enviarías un correo."
+            mensaje="Correo enviado exitosamente"
         )
 
     return render_template("cambiar_password.html")
 
-@app.route("/editar_perfil")
+@app.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+
+    try:
+
+        correo = serializer.loads(
+            token,
+            salt="recuperar-password",
+            max_age=3600
+        )
+
+    except:
+        return "El enlace expiro o es invalido"
+
+    if request.method == "POST":
+
+        nueva_password = request.form["password"]
+
+        password_hash = bcrypt.hashpw(
+            nueva_password.encode("utf-8"),
+            bcrypt.gensalt()
+        )
+
+        usuarios.update_one(
+            {"usuario": correo},
+            {"$set": {"password": password_hash}}
+        )
+
+        return redirect(url_for("login"))
+
+    return render_template(
+        "reset_password.html",
+        token=token
+    )
+
+@app.route("/editar_perfil", methods=["GET", "POST"])
 def editar_perfil():
 
     if "usuario" not in session:
         return redirect(url_for("login"))
 
-    return "Pantalla editar perfil en construcción"
+    user = usuarios.find_one({
+        "usuario": session["usuario"]
+    })
+
+    if request.method == "POST":
+
+        nueva_fecha = (
+            f'{request.form["dia"]}/'
+            f'{request.form["mes"]}/'
+            f'{request.form["anio"]}'
+        )
+
+        usuarios.update_one(
+
+            {"usuario": session["usuario"]},
+
+            {"$set": {
+
+                "fecha_nacimiento": nueva_fecha,
+
+                "genero": request.form["genero"]
+
+            }}
+
+        )
+
+        return redirect(url_for("perfil"))
+
+    return render_template(
+        "editar_perfil.html",
+        user=user
+    )
 
 if __name__ == "__main__":
 

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+    <div class="col-md-4">
+
+        <div class="card p-4 shadow"
+             style="background-color: #1f2a36;
+                    color: #ffffff;
+                    border-radius: 15px;">
+
+            <h2 class="text-center mb-4">
+                Editar Perfil
+            </h2>
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label"
+                           style="color: #a680d8;">
+
+                        Email
+
+                    </label>
+
+                    <input
+                        type="email"
+                        class="form-control"
+                        value="{{ user.usuario }}"
+                        disabled
+                        style="background-color: #2c3e50;
+                               color: white;
+                               border: none;"
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label"
+                           style="color: #a680d8;">
+
+                        Día
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="dia"
+                        class="form-control"
+                        required
+                        style="background-color: #2c3e50;
+                               color: white;
+                               border: none;"
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label"
+                           style="color: #a680d8;">
+
+                        Mes
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="mes"
+                        class="form-control"
+                        required
+                        style="background-color: #2c3e50;
+                               color: white;
+                               border: none;"
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label"
+                           style="color: #a680d8;">
+
+                        Año
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="anio"
+                        class="form-control"
+                        required
+                        style="background-color: #2c3e50;
+                               color: white;
+                               border: none;"
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label"
+                           style="color: #a680d8;">
+
+                        Género
+
+                    </label>
+
+                    <select
+                        name="genero"
+                        class="form-control"
+                        required
+                        style="background-color: #2c3e50;
+                               color: white;
+                               border: none;"
+                    >
+
+                        <option value="Masculino">
+                            Masculino
+                        </option>
+
+                        <option value="Femenino">
+                            Femenino
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn w-100 mb-3"
+                    style="background-color: #a680d8;
+                           border-color: #a680d8;
+                           color: white;">
+
+                    Guardar Cambios
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
