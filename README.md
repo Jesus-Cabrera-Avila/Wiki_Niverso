@@ -8,7 +8,7 @@
 ### Jesus Cabrera Avila
 ### 24308060610607@cetis61.edu.mx
 
-![Texto alternativo](static/img/Evan.png)
+![WhatsApp Image 2025-09-17 at 6 36 05 PM](https://github.com/user-attachments/assets/3d4cdea1-52af-4e85-810e-e29b146b4dbe)
 
 ### Jesus Cabrera Avila
 ### 24308060610607@cetis61.edu.mx
