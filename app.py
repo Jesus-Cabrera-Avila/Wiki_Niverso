@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 app.secret_key = "clave_secreta_super_segura"
 
+# Define el dominio principal. que genera URLs completas como: Puerto TLS. Servidor SMTP de Gmail. Activa cifrado TLS. Correo remitente. Contraseña de aplicación de Gmail. (lo hace una red publica pero segura)
 app.config["SERVER_NAME"] = "sevenfold-dormitory-emptier.ngrok-free.dev"
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
@@ -19,10 +20,13 @@ app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USERNAME"] = "jchuy.avigoku.8z@gmail.com"
 app.config["MAIL_PASSWORD"] = "unyg pydi xjmo ysxx"
 
+# Conecta Flask Mail con tu aplicación.
 mail = Mail(app)
 
+# Crea un generador de tokens. Sirve para crear enlaces de recuperación.
 serializer = URLSafeTimedSerializer(app.secret_key)
 
+# Cadena de conexión.
 uri = "mongodb+srv://24308060610607_db_user:J260909c@dmc5.af41dor.mongodb.net/?retryWrites=true&w=majority"
 
 client = MongoClient(uri)
@@ -86,6 +90,7 @@ def registrar():
             error="Ese correo ya esta registrado"
         )
 
+    # VALIDACIÓN DE CONTRASEÑA: Convierte texto a bytes. Compara hash almacenado.
     password_hash = bcrypt.hashpw(
         password.encode("utf-8"),
         bcrypt.gensalt()
