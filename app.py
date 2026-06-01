@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+# Se usa para: Recuperación de contraseña. Verificación de correos. Links temporales.
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
 import bcrypt
