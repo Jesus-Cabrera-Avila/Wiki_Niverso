@@ -123,11 +123,11 @@ def perfil():
 
     if "usuario" not in session:
         return redirect(url_for("login"))
-
+# Busca usuario actual.
     user = usuarios.find_one({
         "usuario": session["usuario"]
     })
-
+# Envía datos al HTML.
     return render_template(
         "perfil.html",
         user=user
@@ -135,7 +135,7 @@ def perfil():
 
 @app.route("/logout")
 def logout():
-
+# Elimina la sesión.
     session.pop("usuario", None)
 
     return redirect(url_for("login"))
@@ -145,7 +145,7 @@ def tarjetas():
 
     if "usuario" not in session:
         return redirect(url_for("login"))
-
+# find() Devuelve cursor. list() Convierte cursor en lista.
     lista_comics = list(comics.find())
 
     return render_template(
