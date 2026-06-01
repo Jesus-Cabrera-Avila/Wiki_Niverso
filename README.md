@@ -5,7 +5,7 @@
 ### Galindo Evan Alonso Escareño
 ### 24308060610646@cetis61.edu.mx
 
-<img src="static/img/Evan.jpeg" width="100" alt="Descripción de la imagen">
+<img src="static/img/Evan.jpeg" width="200" alt="Descripción de la imagen">
 
 ### Jesus Cabrera Avila
 ### 24308060610607@cetis61.edu.mx
