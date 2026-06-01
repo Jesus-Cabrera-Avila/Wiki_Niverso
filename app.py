@@ -231,11 +231,12 @@ def guardar_comic():
     return redirect(url_for("tarjetas"))
 
 @app.route("/editar_comic/<id>", methods=["GET", "POST"])
+# Obtiene ID:
 def editar_comic(id):
 
     if "usuario" not in session:
         return redirect(url_for("login"))
-
+# Busca documento:
     comic = comics.find_one({
         "_id": ObjectId(id)
     })
